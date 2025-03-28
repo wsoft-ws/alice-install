@@ -1,2 +1,2 @@
-# alice-install
+# alice install
 AliceScript installation script
