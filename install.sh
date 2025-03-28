@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Losetta Install Script for Unix
+# This script installs the Losetta binary and the IceBuild script
+# Usage: curl https://alice.wsoft.ws/install.sh | sh
+
 target=${1:-/usr/local/bin/alice}
 source='https://download.wsoft.ws/WS00310/alice'
 os=$(uname | tr '[:upper:]' '[:lower:]')

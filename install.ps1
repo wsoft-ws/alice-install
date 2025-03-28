@@ -1,6 +1,12 @@
+# Losetta Install Script for Windows
+# This script detects the system architecture and downloads the appropriate version of Alice.
+# Usage: iwr "https://alice.wsoft.ws/install.ps1" | iex
+
 # Detect the system architecture
 $is64Bit = [Environment]::Is64BitOperatingSystem
 $isArm = $false
+
+Write-Host "* Losetta Installer *"
 
 # Check if we're running on ARM architecture
 try {
@@ -47,12 +53,17 @@ if ($isArm) {
 $destination = Join-Path -Path $env:USERPROFILE -ChildPath "alice.exe"
 
 try {
-    Write-Host "Detected architecture: $archName"
-    Write-Host "Downloading from URL: $url"
+    Write-Host "Losetta for Windows ($archName) will install"
+    Write-Host "from: $url"
+    Write-Host "to: $destination"
     
     # Download the file
     Invoke-WebRequest -Uri $url -OutFile $destination -ErrorAction Stop
     Write-Host "Successfully downloaded file from $url to $destination"
+
+    Write-Host "Downloading script..."
+    Start-Process -FilePath $destination -ArgumentList "install --args https://alice.wsoft.ws/icebuild.ice icebuild" -Wait -NoNewWindow
+    Write-Host "Installation completed successfully."
 }
 catch {
     Write-Error "Failed to download the file: $_"
